@@ -1,424 +1,468 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Congress by Sortition</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background: #d4d4d8;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 950px;
-            margin: 0 auto;
-            background: #e4e4e7;
-            border: 2px solid #71717a;
-            padding: 30px;
-            border-radius: 4px;
-        }
-        
-        header {
-            text-align: center;
-            border-bottom: 2px solid #52525b;
-            padding-bottom: 20px;
-            margin-bottom: 25px;
-        }
-        
-        h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            color: #18181b;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .controls {
-            text-align: center;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: #fafafa;
-            border: 1px solid #a1a1aa;
-            border-radius: 4px;
-        }
-        
-        button {
-            background: #fafafa;
-            border: 2px solid #71717a;
-            padding: 12px 25px;
-            font-size: 1em;
-            font-weight: 700;
-            cursor: pointer;
-            margin: 0 5px;
-            font-family: 'Courier New', Courier, monospace;
-            text-transform: uppercase;
-            color: #18181b;
-            transition: all 0.2s;
-            border-radius: 3px;
-        }
-        
-        button:hover {
-            background: #e4e4e7;
-            border-color: #52525b;
-        }
-        
-        button.active {
-            background: #18181b;
-            color: #fafafa;
-            border-color: #18181b;
-        }
-        
-        .generate-btn {
-            background: #18181b;
-            color: #fafafa;
-            font-size: 1.1em;
-            padding: 12px 35px;
-            margin-left: 15px;
-            border: 2px solid #18181b;
-        }
-        
-        .generate-btn:hover {
-            background: #27272a;
-            border-color: #27272a;
-        }
-        
-        .chart-panel {
-            background: #fafafa;
-            border: 2px solid #71717a;
-            padding: 0;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .chart-title {
-            text-align: center;
-            background: #27272a;
-            color: #fafafa;
-            font-size: 1.3em;
-            font-weight: 700;
-            padding: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th {
-            background: #27272a;
-            color: #fafafa;
-            padding: 12px;
-            text-align: left;
-            font-size: 0.95em;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        th.sortition-col {
-            background: #1e40af;
-            color: #fafafa;
-        }
-        
-        th.current-col {
-            background: #991b1b;
-            color: #fafafa;
-        }
-        
-        td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #d4d4d8;
-            font-size: 0.95em;
-            color: #18181b;
-            font-weight: 600;
-        }
-        
-        tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tr:nth-child(even) {
-            background: #f4f4f5;
-        }
-        
-        .group-name {
-            font-weight: 700;
-            color: #18181b;
-        }
-        
-        .sortition-value {
-            color: #1e40af;
-            font-weight: 700;
-            background: #dbeafe;
-        }
-        
-        .current-value {
-            color: #991b1b;
-            font-weight: 700;
-            background: #fee2e2;
-        }
-        
-        .zero-value {
-            color: #71717a;
-            font-style: italic;
-        }
-        
-        .section-header {
-            background: #71717a !important;
-            color: #fafafa;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 1px;
-        }
-        
-        .section-header td {
-            padding: 8px 12px;
-            border-top: 1px solid #52525b;
-            border-bottom: 1px solid #52525b;
-        }
-        
-        .unrepresented-section {
-            background: #fef2f2 !important;
-        }
-        
-        .unrepresented-section .group-name {
-            color: #991b1b;
-            font-weight: 700;
-        }
-        
-        .explanation {
-            background: #fafafa;
-            border: 2px solid #71717a;
-            padding: 20px;
-            text-align: left;
-            color: #27272a;
-            font-size: 0.9em;
-            line-height: 1.6;
-            font-weight: 600;
-            border-radius: 4px;
-        }
-        
-        .explanation strong {
-            text-transform: uppercase;
-            color: #18181b;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.6em;
-            }
-            
-            .generate-btn {
-                margin-left: 0;
-                margin-top: 10px;
-                display: block;
-                width: 100%;
-            }
-            
-            th, td {
-                padding: 8px 6px;
-                font-size: 0.85em;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Congress by Lot</title>
+<meta name="description" content="A legislature drawn at random from the people it governs. Seat by seat, against the one we elected." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ground:#b9c0b4;
+    --panel:#c9cfc3;
+    --ink:#10130d;
+    --soft:#464b41;
+    --pad:14px;
+    --max:1180px;
+
+    --c-deep:#2f4b3f;
+    --c-moss:#7a9b6e;
+    --c-bone:#e6e0cf;
+    --c-brick:#a84c38;
+    --c-slate:#3f6d8f;
+    --c-plum:#6b5b8a;
+    --c-grey:#8b8f88;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--ground); color:var(--ink);
+    font-family:'Courier Prime','Courier New',Courier,monospace;
+    font-size:15px; line-height:1.5;
+    padding:0 var(--pad) 64px;
+    -webkit-font-smoothing:none;
+  }
+  .wrap{max-width:var(--max); margin-inline:auto;}
+
+  h1{
+    font-weight:700; line-height:.92; letter-spacing:-.01em;
+    font-size:min(calc((100vw - var(--pad)*2) / 8.4), 108px);
+    padding-top:28px;
+  }
+  .thesis{max-width:56ch; margin-top:14px; font-size:16px;}
+  .thesis em{font-style:italic;}
+
+  h2{
+    font-size:13px; font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--soft);
+    margin:52px 0 14px;
+  }
+
+  .row{display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+  button{
+    font-family:inherit; font-size:12px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:9px 13px; min-height:38px;
+    background:var(--panel); color:var(--ink);
+    border:none; cursor:pointer;
+  }
+  button[aria-pressed="true"]{background:var(--ink); color:var(--panel);}
+  button:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
+
+  /* ---- the chamber ---- */
+  #chamber{
+    margin-top:16px;
+    display:grid; gap:3px;
+    grid-template-columns:repeat(var(--cols), 1fr);
+  }
+  .seat{
+    aspect-ratio:1; width:100%;
+    border:none; padding:0; min-height:0;
+    cursor:pointer;
+  }
+  .seat:focus-visible{outline:2px solid var(--ink); outline-offset:1px;}
+  .seat[data-on="1"]{outline:2px solid var(--ink); outline-offset:1px;}
+
+  #legend{display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:14px; font-size:12px;}
+  .lg{display:flex; align-items:center; gap:7px; white-space:nowrap;}
+  .sw{width:13px; height:13px; flex:0 0 auto;}
+
+  /* ---- person ---- */
+  #person{margin-top:20px; background:var(--panel); padding:16px 18px; max-width:60ch;}
+  #person .who{font-weight:700; font-size:17px; margin-bottom:9px;}
+  #person dl{display:grid; grid-template-columns:auto 1fr; gap:3px 20px; font-size:14px;}
+  #person dt{color:var(--soft);}
+  #person .hint{color:var(--soft); font-size:14px;}
+
+  /* ---- comparison ---- */
+  .tbl{width:100%; border-collapse:collapse; font-size:14px;}
+  .tbl th{
+    text-align:left; font-size:11px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--soft); font-weight:700; padding:0 10px 10px 0; vertical-align:bottom;
+  }
+  .tbl td{padding:5px 10px 5px 0; vertical-align:middle;}
+  .tbl .grp{white-space:nowrap;}
+  .tbl .num{text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; width:1%;}
+  .bandcell{width:46%; min-width:130px;}
+  .band{position:relative; height:15px; background:var(--panel);}
+  .band i{position:absolute; top:0; bottom:0; background:var(--c-moss);}
+  .band u{position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--ink); text-decoration:none;}
+  .band s{position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--c-brick); text-decoration:none;}
+  .zero{color:var(--c-brick); font-weight:700;}
+  .keyline{font-size:13px; color:var(--soft); margin-top:12px; max-width:64ch;}
+
+  .cols{display:grid; gap:26px 40px; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); margin-top:6px;}
+  .cols h3{font-size:15px; font-weight:700; margin-bottom:5px;}
+  .cols p{font-size:14px; max-width:46ch;}
+  .cols .when{font-size:12px; color:var(--soft); letter-spacing:.08em; text-transform:uppercase;}
+
+  .prose{max-width:64ch; font-size:14px;}
+  .prose p{margin-bottom:11px;}
+  .prose strong{font-weight:700;}
+
+  @media (max-width:560px){
+    body{font-size:14px;}
+    .tbl .grp{white-space:normal;}
+    #legend{font-size:11px;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .seat{transition:background-color .18s linear;}
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Congress by Sortition</h1>
-        </header>
-        
-        <div class="controls">
-            <button id="houseBtn" class="active" onclick="setChamber('house')">House (435)</button>
-            <button id="senateBtn" onclick="setChamber('senate')">Senate (100)</button>
-            <button class="generate-btn" onclick="generate()">Generate New Sample</button>
-        </div>
-        
-        <div class="chart-panel">
-            <div class="chart-title">Demographic Comparison Table</div>
-            <table id="comparisonTable"></table>
-        </div>
-        
-        <div class="explanation">
-            <strong>Definition:</strong> Sortition is the selection of political representatives by random lottery from all eligible citizens.
-            <br><br>
-            <strong>Methodology:</strong> This analysis compares the demographic composition of a randomly selected Congress (sortition) against the current elected Congress. Data reflects actual U.S. Census demographics and current Congressional composition.
-            <br><br>
-            <strong>Note:</strong> Rows with pink background indicate demographic groups with zero representation in the current Congress.
-        </div>
-    </div>
+<div class="wrap">
 
-    <script>
-        // US Demographics (Census data)
-        const demographics = {
-            age: {'18-29': 0.21, '30-39': 0.18, '40-49': 0.16, '50-64': 0.25, '65+': 0.20},
-            gender: {'Female': 0.51, 'Male': 0.49},
-            race: {'White': 0.61, 'Hispanic': 0.18, 'Black': 0.12, 'Asian': 0.06, 'Other': 0.03},
-            income: {'Under $25k': 0.19, '$25k-50k': 0.22, '$50k-75k': 0.17, '$75k-100k': 0.14, 'Over $100k': 0.28},
-            education: {'HS or Less': 0.39, 'Some College': 0.28, 'Bachelor\'s': 0.21, 'Graduate': 0.12},
-            employment: {'Full-time': 0.49, 'Part-time': 0.13, 'Unemployed': 0.04, 'Student': 0.08, 'Retired': 0.18, 'Disabled': 0.05, 'Other': 0.03}
-        };
-        
-        // Current Congress (actual data)
-        const currentHouse = {
-            age: {'18-29': 0, '30-39': 0.04, '40-49': 0.15, '50-64': 0.48, '65+': 0.33},
-            gender: {'Female': 0.29, 'Male': 0.71},
-            race: {'White': 0.73, 'Hispanic': 0.10, 'Black': 0.12, 'Asian': 0.04, 'Other': 0.01},
-            income: {'Under $25k': 0, '$25k-50k': 0, '$50k-75k': 0, '$75k-100k': 0, 'Over $100k': 1.00},
-            education: {'HS or Less': 0, 'Some College': 0, 'Bachelor\'s': 0.40, 'Graduate': 0.60},
-            employment: {'Full-time': 1.00, 'Part-time': 0, 'Unemployed': 0, 'Student': 0, 'Retired': 0, 'Disabled': 0, 'Other': 0}
-        };
-        
-        const currentSenate = {
-            age: {'18-29': 0, '30-39': 0.01, '40-49': 0.10, '50-64': 0.44, '65+': 0.45},
-            gender: {'Female': 0.25, 'Male': 0.75},
-            race: {'White': 0.91, 'Hispanic': 0.06, 'Black': 0.03, 'Asian': 0, 'Other': 0},
-            income: {'Under $25k': 0, '$25k-50k': 0, '$50k-75k': 0, '$75k-100k': 0, 'Over $100k': 1.00},
-            education: {'HS or Less': 0, 'Some College': 0, 'Bachelor\'s': 0.35, 'Graduate': 0.65},
-            employment: {'Full-time': 1.00, 'Part-time': 0, 'Unemployed': 0, 'Student': 0, 'Retired': 0, 'Disabled': 0, 'Other': 0}
-        };
-        
-        let chamber = 'house';
-        let sortitionData = {};
-        
-        function setChamber(c) {
-            chamber = c;
-            document.getElementById('houseBtn').classList.toggle('active', c === 'house');
-            document.getElementById('senateBtn').classList.toggle('active', c === 'senate');
-            generate();
-        }
-        
-        function randomSample(size) {
-            const result = {};
-            
-            for (let category in demographics) {
-                result[category] = {};
-                const options = demographics[category];
-                const counts = {};
-                
-                for (let option in options) {
-                    counts[option] = 0;
-                }
-                
-                for (let i = 0; i < size; i++) {
-                    const rand = Math.random();
-                    let cumulative = 0;
-                    
-                    for (let option in options) {
-                        cumulative += options[option];
-                        if (rand <= cumulative) {
-                            counts[option]++;
-                            break;
-                        }
-                    }
-                }
-                
-                for (let option in counts) {
-                    result[category][option] = counts[option] / size;
-                }
-            }
-            
-            return result;
-        }
-        
-        function generate() {
-            const size = chamber === 'house' ? 435 : 100;
-            sortitionData = randomSample(size);
-            const current = chamber === 'house' ? currentHouse : currentSenate;
-            
-            // Represented groups
-            const represented = [
-                {group: 'Women', sort: Math.round(sortitionData.gender['Female'] * 100), curr: Math.round(current.gender['Female'] * 100)},
-                {group: 'Men', sort: Math.round(sortitionData.gender['Male'] * 100), curr: Math.round(current.gender['Male'] * 100)},
-                {group: 'White', sort: Math.round(sortitionData.race['White'] * 100), curr: Math.round(current.race['White'] * 100)},
-                {group: 'Hispanic/Latino', sort: Math.round(sortitionData.race['Hispanic'] * 100), curr: Math.round(current.race['Hispanic'] * 100)},
-                {group: 'Black/African American', sort: Math.round(sortitionData.race['Black'] * 100), curr: Math.round(current.race['Black'] * 100)},
-                {group: 'Asian American', sort: Math.round(sortitionData.race['Asian'] * 100), curr: Math.round(current.race['Asian'] * 100)},
-                {group: 'Age 18-29', sort: Math.round(sortitionData.age['18-29'] * 100), curr: Math.round(current.age['18-29'] * 100)},
-                {group: 'Age 30-39', sort: Math.round(sortitionData.age['30-39'] * 100), curr: Math.round(current.age['30-39'] * 100)},
-                {group: 'Age 40-49', sort: Math.round(sortitionData.age['40-49'] * 100), curr: Math.round(current.age['40-49'] * 100)},
-                {group: 'Age 50-64', sort: Math.round(sortitionData.age['50-64'] * 100), curr: Math.round(current.age['50-64'] * 100)},
-                {group: 'Age 65+', sort: Math.round(sortitionData.age['65+'] * 100), curr: Math.round(current.age['65+'] * 100)},
-                {group: 'Income Over $100k', sort: Math.round(sortitionData.income['Over $100k'] * 100), curr: Math.round(current.income['Over $100k'] * 100)},
-                {group: 'Bachelor\'s Degree', sort: Math.round(sortitionData.education['Bachelor\'s'] * 100), curr: Math.round(current.education['Bachelor\'s'] * 100)},
-                {group: 'Graduate Degree', sort: Math.round(sortitionData.education['Graduate'] * 100), curr: Math.round(current.education['Graduate'] * 100)},
-                {group: 'Employed Full-Time', sort: Math.round(sortitionData.employment['Full-time'] * 100), curr: Math.round(current.employment['Full-time'] * 100)},
-                {group: 'Retired', sort: Math.round(sortitionData.employment['Retired'] * 100), curr: Math.round(current.employment['Retired'] * 100)}
-            ];
-            
-            // Unrepresented groups
-            const unrepresented = [
-                {group: 'Income Under $25k', sort: Math.round(sortitionData.income['Under $25k'] * 100), curr: 0},
-                {group: 'Income $25k-$50k', sort: Math.round(sortitionData.income['$25k-50k'] * 100), curr: 0},
-                {group: 'Income $50k-$75k', sort: Math.round(sortitionData.income['$50k-75k'] * 100), curr: 0},
-                {group: 'Income $75k-$100k', sort: Math.round(sortitionData.income['$75k-100k'] * 100), curr: 0},
-                {group: 'High School or Less', sort: Math.round(sortitionData.education['HS or Less'] * 100), curr: 0},
-                {group: 'Some College', sort: Math.round(sortitionData.education['Some College'] * 100), curr: 0},
-                {group: 'Employed Part-Time', sort: Math.round(sortitionData.employment['Part-time'] * 100), curr: 0},
-                {group: 'Unemployed', sort: Math.round(sortitionData.employment['Unemployed'] * 100), curr: 0},
-                {group: 'Students', sort: Math.round(sortitionData.employment['Student'] * 100), curr: 0},
-                {group: 'Disabled/Unable to Work', sort: Math.round(sortitionData.employment['Disabled'] * 100), curr: 0}
-            ];
-            
-            let html = `
-                <thead>
-                    <tr>
-                        <th>Demographic Group</th>
-                        <th class="sortition-col">Sortition (%)</th>
-                        <th class="current-col">Current (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="section-header">
-                        <td colspan="3">REPRESENTED GROUPS</td>
-                    </tr>
-            `;
-            
-            represented.forEach(row => {
-                html += `
-                    <tr>
-                        <td class="group-name">${row.group}</td>
-                        <td class="sortition-value">${row.sort}%</td>
-                        <td class="current-value">${row.curr}%</td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                    <tr class="section-header">
-                        <td colspan="3">UNREPRESENTED GROUPS (0% IN CURRENT CONGRESS)</td>
-                    </tr>
-            `;
-            
-            unrepresented.forEach(row => {
-                html += `
-                    <tr class="unrepresented-section">
-                        <td class="group-name">${row.group}</td>
-                        <td class="sortition-value">${row.sort}%</td>
-                        <td class="current-value zero-value">0%</td>
-                    </tr>
-                `;
-            });
-            
-            html += '</tbody>';
-            
-            document.getElementById('comparisonTable').innerHTML = html;
-        }
-        
-        // Generate on load
-        generate();
-    </script>
+  <h1>CONGRESS<br>BY LOT</h1>
+
+  <p class="thesis">Every seat below is one person, drawn at random from the adult population &mdash; the way Athens picked most of its government for two centuries. Not a poll. A <em>room</em>. Tap any seat to meet whoever the lottery put there.</p>
+
+  <h2>The chamber</h2>
+  <div class="row">
+    <button id="bHouse" aria-pressed="true">House &middot; 435</button>
+    <button id="bSenate" aria-pressed="false">Senate &middot; 100</button>
+    <button id="bDraw">Draw again</button>
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <span style="font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-right:4px">Colour by</span>
+    <button class="lay" data-k="age" aria-pressed="true">Age</button>
+    <button class="lay" data-k="race" aria-pressed="false">Race</button>
+    <button class="lay" data-k="income" aria-pressed="false">Income</button>
+    <button class="lay" data-k="edu" aria-pressed="false">School</button>
+    <button class="lay" data-k="work" aria-pressed="false">Work</button>
+    <button class="lay" data-k="sex" aria-pressed="false">Sex</button>
+  </div>
+
+  <div id="chamber" role="group" aria-label="Seated chamber"></div>
+  <div id="legend"></div>
+
+  <div id="person"><span class="hint">Tap a seat.</span></div>
+
+  <h2>What changes</h2>
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th class="bandcell">Range across <span id="nDraws">500</span> draws</th>
+        <th class="num">By lot</th>
+        <th class="num">Elected</th>
+      </tr>
+    </thead>
+    <tbody id="cmp"></tbody>
+  </table>
+  <p class="keyline">The bar shows where that group lands across hundreds of separate lotteries &mdash; sortition is a distribution, not a promise. The dark tick is this draw. The red tick is the Congress now sitting.</p>
+
+  <h2>Not hypothetical</h2>
+  <div class="cols">
+    <div>
+      <p class="when">Athens &middot; 5th c. BC</p>
+      <h3>The kleroterion</h3>
+      <p>A stone slab that randomised jurors and council members daily. Athenians treated election as the oligarchic method and the lot as the democratic one &mdash; the reverse of the modern instinct.</p>
+    </div>
+    <div>
+      <p class="when">Venice &middot; 1268&ndash;1797</p>
+      <h3>Ten rounds of chance</h3>
+      <p>The Doge was chosen by an alternating sequence of lot and vote, repeated ten times. The randomness was there to make the process too expensive to rig.</p>
+    </div>
+    <div>
+      <p class="when">Ireland &middot; 2016&ndash;18</p>
+      <h3>The Citizens' Assembly</h3>
+      <p>Ninety-nine randomly selected citizens deliberated on abortion and recommended repealing the Eighth Amendment. The referendum that followed matched them closely.</p>
+    </div>
+    <div>
+      <p class="when">France &middot; 2019&ndash;20</p>
+      <h3>Convention Citoyenne</h3>
+      <p>A hundred and fifty people drawn by lot spent nine months on climate policy and returned 149 proposals &mdash; and a long argument about what governments owe an assembly they convened.</p>
+    </div>
+    <div>
+      <p class="when">Belgium &middot; 2019&ndash;</p>
+      <h3>A permanent council</h3>
+      <p>The German-speaking Community seats an ongoing citizens' council chosen by lot alongside its elected parliament. Not a one-off panel &mdash; a standing institution.</p>
+    </div>
+    <div>
+      <p class="when">Everywhere &middot; now</p>
+      <h3>The jury</h3>
+      <p>Sortition already decides whether you go to prison. We accept random selection for the gravest decisions a state makes, and consider it unthinkable for the mildest.</p>
+    </div>
+  </div>
+
+  <h2>The case against</h2>
+  <div class="prose">
+    <p><strong>Competence.</strong> Legislating is a skill. A random plumber has no experience of budget reconciliation, and the lottery offers no way to remove someone who turns out to be bad at it.</p>
+    <p><strong>Accountability.</strong> An elected member can be thrown out. A member drawn by lot answers to no one, and a term that ends automatically is not a term anyone can shorten.</p>
+    <p><strong>Capture.</strong> Amateurs with no staff and no institutional memory are easier for lobbyists and civil servants to steer &mdash; the expertise merely relocates to people nobody chose at all.</p>
+    <p><strong>Consent.</strong> Most people do not want the job. A chamber of conscripts is representative in composition and unrepresentative in enthusiasm, and self-selection out of the pool reintroduces the bias sortition was meant to remove.</p>
+    <p>Most serious proposals answer these by pairing a sortition chamber with an elected one, or by using lot for review and agenda-setting rather than for drafting law.</p>
+  </div>
+
+  <h2>Method</h2>
+  <div class="prose">
+    <p><strong>People, not percentages.</strong> Each seat is sampled as a whole person: age first, then schooling conditioned on age, work conditioned on both, and income conditioned on all three. Sampling each attribute independently &mdash; the usual shortcut &mdash; produces twenty-two-year-old retirees with graduate degrees. The correlations are approximate, but they are there.</p>
+    <p><strong>Population figures</strong> are rounded U.S. adult shares. <strong>Elected figures</strong> are approximate for the current Congress and should be treated as indicative, not authoritative.</p>
+    <p><strong>One number is a definition, not a finding.</strong> Every member of Congress earns a salary well above $100,000, so the elected chamber is 100% high-income by construction. That row measures the pay of the office, not the wealth someone brought to it. The honest version of the income comparison is the one this instrument cannot show: net worth before taking office.</p>
+    <p><strong>Race and sex</strong> are sampled close to population shares, with a mild age correlation. They are reported because the elected chamber's gaps are the most documented, not because they are the deepest.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var AGE  = ["18-29","30-39","40-49","50-64","65+"];
+  var EDU  = ["No degree","Some college","Bachelor's","Graduate"];
+  var WORK = ["Full-time","Part-time","Unemployed","Student","Retired","Not working"];
+  var INC  = ["Under $25k","$25-50k","$50-75k","$75-100k","Over $100k"];
+  var RACE = ["White","Hispanic","Black","Asian","Other"];
+  var SEX  = ["Female","Male"];
+
+  var P_AGE = [.21,.18,.16,.25,.20];
+
+  // education | age
+  var P_EDU = {
+    0:[.42,.33,.19,.06],
+    1:[.36,.26,.25,.13],
+    2:[.37,.27,.22,.14],
+    3:[.38,.28,.20,.14],
+    4:[.44,.26,.18,.12]
+  };
+  // work | age (then nudged by education)
+  var P_WORK = {
+    0:[.44,.18,.06,.24,.00,.08],
+    1:[.74,.09,.05,.03,.00,.09],
+    2:[.75,.08,.04,.01,.01,.11],
+    3:[.63,.09,.04,.01,.13,.10],
+    4:[.14,.07,.01,.00,.72,.06]
+  };
+  // income | education, adjusted by work state
+  var P_INC = {
+    0:[.31,.30,.19,.11,.09],
+    1:[.20,.26,.21,.16,.17],
+    2:[.10,.18,.20,.19,.33],
+    3:[.06,.12,.16,.19,.47]
+  };
+  // race | age — younger cohorts more diverse
+  var P_RACE = {
+    0:[.52,.24,.14,.07,.03],
+    1:[.56,.21,.13,.07,.03],
+    2:[.60,.19,.12,.06,.03],
+    3:[.66,.15,.11,.05,.03],
+    4:[.74,.10,.09,.05,.02]
+  };
+
+  function drawFrom(p){
+    var r = Math.random(), c = 0;
+    for (var i=0;i<p.length;i++){ c += p[i]; if (r <= c) return i; }
+    return p.length-1;
+  }
+  function shift(p, idx, mult){
+    var q = p.slice(), s = 0, i;
+    for (i=0;i<q.length;i++){ if (idx.indexOf(i)>-1) q[i] *= mult; s += q[i]; }
+    for (i=0;i<q.length;i++) q[i] /= s;
+    return q;
+  }
+
+  function person(){
+    var a = drawFrom(P_AGE);
+    var e = drawFrom(P_EDU[a]);
+    var w = drawFrom(shift(P_WORK[a], [0], e >= 2 ? 1.18 : 0.92));
+    var ip = P_INC[e];
+    if (w === 2 || w === 3 || w === 5) ip = shift(ip, [0,1], 2.6);
+    else if (w === 1)                  ip = shift(ip, [0,1], 1.7);
+    else if (w === 4)                  ip = shift(ip, [0,1,2], 1.5);
+    var i = drawFrom(ip);
+    return { age:a, edu:e, work:w, income:i, race:drawFrom(P_RACE[a]), sex:drawFrom([.51,.49]) };
+  }
+
+  // approximate current Congress
+  var ELECTED = {
+    house:  { female:29, w65:33, w1829:0, white:73, hisp:10, black:12, asian:4,
+              nodeg:0, somecol:0, grad:60, over100:100, under50:0, retired:0, unemp:0, part:0 },
+    senate: { female:25, w65:45, w1829:0, white:91, hisp:6,  black:3,  asian:0,
+              nodeg:0, somecol:0, grad:65, over100:100, under50:0, retired:0, unemp:0, part:0 }
+  };
+
+  var ROWS = [
+    { key:"female",  label:"Women",              f:function(p){return p.sex===0;} },
+    { key:"w1829",   label:"Under 30",           f:function(p){return p.age===0;} },
+    { key:"w65",     label:"65 and over",        f:function(p){return p.age===4;} },
+    { key:"white",   label:"White",              f:function(p){return p.race===0;} },
+    { key:"hisp",    label:"Hispanic",           f:function(p){return p.race===1;} },
+    { key:"black",   label:"Black",              f:function(p){return p.race===2;} },
+    { key:"asian",   label:"Asian",              f:function(p){return p.race===3;} },
+    { key:"nodeg",   label:"No college degree",  f:function(p){return p.edu===0;} },
+    { key:"somecol", label:"Some college",       f:function(p){return p.edu===1;} },
+    { key:"grad",    label:"Graduate degree",    f:function(p){return p.edu===3;} },
+    { key:"under50", label:"Under $50k",         f:function(p){return p.income<=1;} },
+    { key:"over100", label:"Over $100k",         f:function(p){return p.income===4;} },
+    { key:"part",    label:"Part-time work",     f:function(p){return p.work===1;} },
+    { key:"unemp",   label:"Unemployed",         f:function(p){return p.work===2;} },
+    { key:"retired", label:"Retired",            f:function(p){return p.work===4;} }
+  ];
+
+  var PAL = {
+    age:    ["#2f4b3f","#7a9b6e","#e6e0cf","#3f6d8f","#6b5b8a"],
+    race:   ["#e6e0cf","#7a9b6e","#2f4b3f","#3f6d8f","#8b8f88"],
+    income: ["#a84c38","#6b5b8a","#3f6d8f","#7a9b6e","#e6e0cf"],
+    edu:    ["#a84c38","#3f6d8f","#7a9b6e","#e6e0cf"],
+    work:   ["#2f4b3f","#7a9b6e","#a84c38","#3f6d8f","#6b5b8a","#8b8f88"],
+    sex:    ["#6b5b8a","#7a9b6e"]
+  };
+  var LABELS = { age:AGE, race:RACE, income:INC, edu:EDU, work:WORK, sex:SEX };
+  var FIELD  = { age:"age", race:"race", income:"income", edu:"edu", work:"work", sex:"sex" };
+
+  var DRAWS = 500;
+  var size = 435, layer = "age", house = true;
+  var chamber = [], bands = {}, picked = -1;
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function seatCols(n){
+    var w = Math.min(window.innerWidth - 28, 1180);
+    var target = n > 200 ? 15 : 21;
+    return Math.max(10, Math.min(n, Math.floor(w / target)));
+  }
+
+  function build(){
+    chamber = [];
+    for (var i=0;i<size;i++) chamber.push(person());
+    picked = -1;
+    computeBands();
+    paint();
+    renderCmp();
+    $("person").innerHTML = '<span class="hint">Tap a seat.</span>';
+  }
+
+  function computeBands(){
+    var acc = {};
+    ROWS.forEach(function(r){ acc[r.key] = []; });
+    for (var d=0; d<DRAWS; d++){
+      var counts = {};
+      ROWS.forEach(function(r){ counts[r.key] = 0; });
+      for (var i=0;i<size;i++){
+        var p = person();
+        for (var j=0;j<ROWS.length;j++) if (ROWS[j].f(p)) counts[ROWS[j].key]++;
+      }
+      ROWS.forEach(function(r){ acc[r.key].push(counts[r.key]/size*100); });
+    }
+    bands = {};
+    ROWS.forEach(function(r){
+      var a = acc[r.key].sort(function(x,y){ return x-y; });
+      bands[r.key] = { lo:a[Math.floor(DRAWS*0.05)], hi:a[Math.floor(DRAWS*0.95)] };
+    });
+  }
+
+  function paint(){
+    var c = $("chamber");
+    c.style.setProperty("--cols", seatCols(size));
+    var pal = PAL[layer], f = FIELD[layer], labels = LABELS[layer];
+    var html = "";
+    for (var i=0;i<size;i++){
+      var v = chamber[i][f];
+      html += '<button class="seat" data-i="'+i+'" data-on="'+(picked===i?1:0)+
+              '" style="background:'+pal[v]+'" aria-label="Seat '+(i+1)+', '+labels[v]+'"></button>';
+    }
+    c.innerHTML = html;
+
+    var lg = "";
+    for (var k=0;k<labels.length;k++){
+      var n = 0;
+      for (var m=0;m<size;m++) if (chamber[m][f] === k) n++;
+      lg += '<span class="lg"><span class="sw" style="background:'+pal[k]+'"></span>'+
+            labels[k]+' &middot; '+Math.round(n/size*100)+'%</span>';
+    }
+    $("legend").innerHTML = lg;
+  }
+
+  function showPerson(i){
+    var p = chamber[i];
+    $("person").innerHTML =
+      '<div class="who">Seat '+(i+1)+'</div>'+
+      '<dl>'+
+      '<dt>Age</dt><dd>'+AGE[p.age]+'</dd>'+
+      '<dt>Sex</dt><dd>'+SEX[p.sex]+'</dd>'+
+      '<dt>Race</dt><dd>'+RACE[p.race]+'</dd>'+
+      '<dt>School</dt><dd>'+EDU[p.edu]+'</dd>'+
+      '<dt>Work</dt><dd>'+WORK[p.work]+'</dd>'+
+      '<dt>Income</dt><dd>'+INC[p.income]+'</dd>'+
+      '</dl>';
+  }
+
+  function renderCmp(){
+    var el = ELECTED[house ? "house" : "senate"];
+    var html = "";
+    ROWS.forEach(function(r){
+      var n = 0;
+      for (var i=0;i<size;i++) if (r.f(chamber[i])) n++;
+      var now = n/size*100;
+      var b = bands[r.key];
+      var e = el[r.key];
+      html += '<tr>'+
+        '<td class="grp">'+r.label+'</td>'+
+        '<td class="bandcell"><div class="band">'+
+          '<i style="left:'+b.lo+'%;width:'+Math.max(1,(b.hi-b.lo))+'%"></i>'+
+          '<u style="left:'+now+'%"></u>'+
+          '<s style="left:'+e+'%"></s>'+
+        '</div></td>'+
+        '<td class="num">'+Math.round(now)+'%</td>'+
+        '<td class="num'+(e===0?' zero':'')+'">'+e+'%</td>'+
+      '</tr>';
+    });
+    $("cmp").innerHTML = html;
+    $("nDraws").textContent = DRAWS;
+  }
+
+  // ---- events ----
+  $("chamber").addEventListener("click", function(ev){
+    var b = ev.target.closest(".seat");
+    if (!b) return;
+    var i = +b.getAttribute("data-i");
+    var prev = document.querySelector('.seat[data-on="1"]');
+    if (prev) prev.setAttribute("data-on","0");
+    b.setAttribute("data-on","1");
+    picked = i;
+    showPerson(i);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".lay"), function(b){
+    b.addEventListener("click", function(){
+      layer = b.getAttribute("data-k");
+      Array.prototype.forEach.call(document.querySelectorAll(".lay"), function(o){
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+      paint();
+    });
+  });
+
+  function setChamber(isHouse){
+    house = isHouse; size = isHouse ? 435 : 100;
+    $("bHouse").setAttribute("aria-pressed", isHouse ? "true":"false");
+    $("bSenate").setAttribute("aria-pressed", isHouse ? "false":"true");
+    build();
+  }
+  $("bHouse").addEventListener("click", function(){ setChamber(true); });
+  $("bSenate").addEventListener("click", function(){ setChamber(false); });
+  $("bDraw").addEventListener("click", build);
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt); rt = setTimeout(paint, 140);
+  });
+
+  build();
+})();
+</script>
 </body>
 </html>
